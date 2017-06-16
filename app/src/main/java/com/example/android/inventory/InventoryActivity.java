@@ -14,7 +14,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,7 +78,6 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
                 int thumbnailColumnIndex = item.getColumnIndex(InventoryEntry.COLUMN_IMAGE);
                 int currentQuantity = item.getInt(quantityColumnIndex);
                 String currentImage = item.getString(thumbnailColumnIndex);
-                Log.v("currentQuantity",""+currentQuantity);
                 intent.setData(currentProduct);
                 intent.putExtra("quantity",currentQuantity);
                 intent.putExtra("photo",currentImage);

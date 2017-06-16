@@ -20,6 +20,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -184,34 +185,57 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                     Toast.LENGTH_SHORT).show();
             return;
         }
+
+        if (TextUtils.isEmpty(quantity)) {
+            Toast.makeText(this, getString(R.string.no_quantity),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(price)){
+            Toast.makeText(this, getString(R.string.no_price),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+
         //test if ther's a Bitmap to save
         if (!image.equals(photo)) {
             Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
             image = InvetoryUtilities.saveToInternalStorage(getApplicationContext(), bitmap);
+            Log.v("photo",photo);
         }
+
+        if (!photo.equals("yes") ) {
+            Toast.makeText(this, getString(R.string.no_photo),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
         Uri newUri = null;
         String mtoast = "";
-        if (!TextUtils.isEmpty(nameString)) {
-            values.put(InventoryEntry.COLUMN_PRODUCT_NAME, nameString);
-            values.put(InventoryEntry.COLUMN_PRODUCT_DESCRIPTION, descString);
-            values.put(InventoryEntry.COLUMN_PRODUCT_QUANTITY, quantity);
-            values.put(InventoryEntry.COLUMN_PRODUCT_PRICE, price);
-            values.put(InventoryEntry.COLUMN_PRODUCT_SOLD, sold);
-            values.put(InventoryEntry.COLUMN_IMAGE, image);
 
-            switch (mMode) {
-                case "ADD":
-                    newUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
-                    mtoast = getString(R.string.editor_insert_Item_successful);
-                    break;
-                case "EDIT":
-                    int updateRows = getContentResolver().update(mCurrentPetUri, values, null, null);
-                    mtoast = getString(R.string.editor_update_Item_successful);
-                    break;
-            }
+        values.put(InventoryEntry.COLUMN_PRODUCT_NAME, nameString);
+        values.put(InventoryEntry.COLUMN_PRODUCT_DESCRIPTION, descString);
+        values.put(InventoryEntry.COLUMN_PRODUCT_QUANTITY, quantity);
+        values.put(InventoryEntry.COLUMN_PRODUCT_PRICE, price);
+        values.put(InventoryEntry.COLUMN_PRODUCT_SOLD, sold);
+        values.put(InventoryEntry.COLUMN_IMAGE, image);
+
+        switch (mMode) {
+            case "ADD":
+                newUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
+                mtoast = getString(R.string.editor_insert_Item_successful);
+                break;
+            case "EDIT":
+                int updateRows = getContentResolver().update(mCurrentPetUri, values, null, null);
+                mtoast = getString(R.string.editor_update_Item_successful);
+                break;
         }
+
 
         // Show a toast message depending on whether or not the insertion was successful
         if (newUri == null && mCurrentPetUri == null) {

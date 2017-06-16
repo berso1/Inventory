@@ -35,4 +35,8 @@
 
     <string name="product_no_name">Product Name needed</string>
     <string name="menu_settings">settings</string>
+    <string name="empty_desc">Please entry Product description</string>
+    <string name="no_price">Please enter product price</string>
+    <string name="no_quantity">Please add product quantity</string>
+    <string name="no_photo">Pleas take a photo of the product</string>
 </resources>

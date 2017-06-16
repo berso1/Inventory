@@ -47,6 +47,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
         TextView product_name = (TextView) view.findViewById(R.id.inventory_item_name_text);
         TextView product_quantity = (TextView) view.findViewById(R.id.inventory_item_current_quantity_text);
         final TextView product_sold = (TextView) view.findViewById(R.id.inventory_item_current_sold_text);
+        TextView price_textview = (TextView) view.findViewById(R.id.price);
         Button product_price = (Button) view.findViewById(R.id.sale_button);
 
         //get column indexes
@@ -77,7 +78,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
 
         //set variables on ListView objects
         product_name.setText(productName);
-        product_price.setText(productPrice);
+        price_textview.setText(productPrice);
         product_quantity.setText(productQuantity);
         product_sold.setText(productSold);
 
